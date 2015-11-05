@@ -1,15 +1,54 @@
 //your variable declarations here
+SpaceShip bob;
 public void setup() 
 {
+  background(0);
+  size(500, 500);
+ bob = new SpaceShip();
+ if(key == 'v')
+ {
+  bob.myCenterX = Math.random()*500;
+ }
   //your code here
 }
 public void draw() 
 {
+  bob.show();
   //your code here
 }
-class SpaceShip //extends Floater  
+class SpaceShip extends Floater  
 {   
-    //your code here
+      //your code here
+  public SpaceShip()
+  {
+     corners = 3;
+     xCorners = new int[corners];
+     yCorners = new int[corners];
+     xCorners[0] = -8;
+     yCorners[0] = -8;
+     xCorners[1] = 16;
+     yCorners[1] = 0;
+     xCorners[2] = -8;
+     yCorners[2] = 8;   
+     myColor = color(255,0,0);
+     myCenterX = 250;
+     myCenterY = 250;
+     myDirectionX = 0;
+     myDirectionY = 0;
+     myPointDirection = 0;   
+
+  }
+ 
+  public void setX(int x) {myCenterX = x;}
+  public int getX() {return (int)myCenterX;}
+  public void setY(int y) {myCenterY = y;}
+  public int getY() {return (int)myCenterY;}
+  public void setDirectionX(double x) { myDirectionX = x;}
+  public double getDirectionX() {return myDirectionX;}
+  public void setDirectionY(double y) {myDirectionY = y;}
+  public double getDirectionY() {return myDirectionY;}
+  public void setPointDirection(int degrees) {myPointDirection = degrees;}
+  public double getPointDirection() {return myPointDirection;}
 }
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
@@ -31,6 +70,7 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   abstract public void setPointDirection(int degrees);   
   abstract public double getPointDirection(); 
 
+
   //Accelerates the floater in the direction it is pointing (myPointDirection)   
   public void accelerate (double dAmount)   
   {          
@@ -48,8 +88,8 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   public void move ()   //move the floater in the current direction of travel
   {      
     //change the x and y coordinates by myDirectionX and myDirectionY       
-    myCenterX += myDirectionX;    
-    myCenterY += myDirectionY;     
+    myCenterX += myCenterX;    
+    myCenterY += myCenterY;     
 
     //wrap around screen    
     if(myCenterX >width)
