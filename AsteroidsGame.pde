@@ -3,19 +3,26 @@ SpaceShip bob;
 public void setup() 
 {
   background(0);
-  size(500, 500);
+  size(600, 600);
  bob = new SpaceShip();
- if(key == 'v')
- {
-  bob.myCenterX = Math.random()*500;
- }
+
   //your code here
 }
 public void draw() 
 {
+  background(0);
   bob.show();
   //your code here
 }
+public void keyPressed()
+{
+  if(key == 'a'){bob.rotate(-15);}
+  
+  if(key == 'd'){bob.rotate(15);}
+  if(key == 'w'){bob.accelerate(9);}
+
+}
+
 class SpaceShip extends Floater  
 {   
       //your code here
@@ -31,8 +38,8 @@ class SpaceShip extends Floater
      xCorners[2] = -8;
      yCorners[2] = 8;   
      myColor = color(255,0,0);
-     myCenterX = 250;
-     myCenterY = 250;
+     myCenterX = 300;
+     myCenterY = 300;
      myDirectionX = 0;
      myDirectionY = 0;
      myPointDirection = 0;   
