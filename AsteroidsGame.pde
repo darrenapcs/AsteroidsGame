@@ -1,61 +1,106 @@
 //your variable declarations here
 SpaceShip bob;
+Star [] star;
+
 public void setup() 
 {
   background(0);
-  size(600, 600);
- bob = new SpaceShip();
-
+  size(600,600);
+  bob = new SpaceShip();
+  star = new Star[100];
+  for(int i = 0; i < star.length; i++)
+  {
+    star[i] = new Star();
+  }
   //your code here
 }
 public void draw() 
 {
   background(0);
+   for(int i = 0; i < star.length; i++)
+  {
+    star[i].show();
+  }
   bob.show();
+  bob.move();
   //your code here
 }
 public void keyPressed()
 {
-  if(key == 'a'){bob.rotate(-15);}
-  
-  if(key == 'd'){bob.rotate(15);}
-  if(key == 'w'){bob.accelerate(9);}
+  if(key == 'a'){bob.rotate(-9);}
+  if(key == 'd'){bob.rotate(9);}
+  if(key == 'w'){bob.accelerate(0.69);}
+  if(key == 's'){bob.accelerate(-0.69);}
+  if(key == 'h')
+  {
+    bob.setDirectionX(0);
+    bob.setDirectionY(0);
+    bob.setPointDirection((int)(Math.random()*360));
+    bob.setX((int)(Math.random()*600));
+    bob.setY((int)(Math.random()*600));
+    bob.accelerate(0);
+  }
+
+
+
+}
+class Star
+{
+  private int starX, starY, starColor;
+  public Star()
+  {
+    starX = (int)(Math.random()*600);
+    starY = (int)(Math.random()*700)-100;
+    starColor = color(255);
+    
+  }
+    
+  public void show()
+  {
+    noStroke();
+    fill(starColor);
+    ellipse(starX,starY,3,3);
+  }
 
 }
 
+
+
 class SpaceShip extends Floater  
 {   
-      //your code here
-  public SpaceShip()
-  {
-     corners = 3;
-     xCorners = new int[corners];
-     yCorners = new int[corners];
-     xCorners[0] = -8;
-     yCorners[0] = -8;
-     xCorners[1] = 16;
-     yCorners[1] = 0;
-     xCorners[2] = -8;
-     yCorners[2] = 8;   
-     myColor = color(255,0,0);
-     myCenterX = 300;
-     myCenterY = 300;
-     myDirectionX = 0;
-     myDirectionY = 0;
-     myPointDirection = 0;   
 
-  }
- 
-  public void setX(int x) {myCenterX = x;}
-  public int getX() {return (int)myCenterX;}
-  public void setY(int y) {myCenterY = y;}
-  public int getY() {return (int)myCenterY;}
-  public void setDirectionX(double x) { myDirectionX = x;}
-  public double getDirectionX() {return myDirectionX;}
-  public void setDirectionY(double y) {myDirectionY = y;}
-  public double getDirectionY() {return myDirectionY;}
-  public void setPointDirection(int degrees) {myPointDirection = degrees;}
-  public double getPointDirection() {return myPointDirection;}
+public SpaceShip()
+{
+corners = 3;
+xCorners = new int[corners];
+yCorners = new int[corners];
+xCorners[0] = -8;
+yCorners[0] = -8;
+xCorners[1] = 16;
+yCorners[1] = 0;
+xCorners[2] = -8;
+yCorners[2] = 8;
+myColor = color(100,200,0);
+myCenterX = 300;
+myCenterY = 300;
+myDirectionX = 0;
+myDirectionY = 0;
+myPointDirection = 0;
+}
+
+
+
+  public void setX(int x){myCenterX = x;}
+  public int getX(){return (int)myCenterX;}
+  public void setY(int y){myCenterY = y;}
+  public int getY(){return (int)myCenterY;}
+  public void setDirectionX(double x){myDirectionX = x;}
+  public double getDirectionX(){return myDirectionX;}
+  public void setDirectionY(double y){myDirectionY = y;}
+  public double getDirectionY(){return myDirectionY;}
+  public void setPointDirection(int degrees){myPointDirection = degrees;}
+  public double getPointDirection(){return myPointDirection;}
+    //your code here
 }
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
@@ -77,7 +122,6 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   abstract public void setPointDirection(int degrees);   
   abstract public double getPointDirection(); 
 
-
   //Accelerates the floater in the direction it is pointing (myPointDirection)   
   public void accelerate (double dAmount)   
   {          
@@ -95,8 +139,8 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   public void move ()   //move the floater in the current direction of travel
   {      
     //change the x and y coordinates by myDirectionX and myDirectionY       
-    myCenterX += myCenterX;    
-    myCenterY += myCenterY;     
+    myCenterX += myDirectionX;    
+    myCenterY += myDirectionY;     
 
     //wrap around screen    
     if(myCenterX >width)
@@ -134,4 +178,3 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     endShape(CLOSE);  
   }   
 } 
-
