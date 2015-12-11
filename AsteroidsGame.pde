@@ -1,12 +1,14 @@
 //your variable declarations here
 SpaceShip bob;
 Star [] star;
+ArrayList <Bullet> bL;
 ArrayList <Asteroid> asteroid;
 public void setup() 
 {
   background(0);
   size(600,600);
   bob = new SpaceShip();
+  bL = new ArrayList <Bullet>();
   star = new Star[120];
   for(int i = 0; i < star.length; i++)
   {
@@ -26,6 +28,11 @@ public void draw()
   {
     star[i].show();
   }
+  for(int i = 0; i < bL.size(); i++)
+  {
+    bL.get(i).show();
+    bL.get(i).move();
+  }
   for(int i = 0; i < asteroid.size(); i++)
   { 
     asteroid.get(i).show();
@@ -33,10 +40,20 @@ public void draw()
    if(dist(bob.getX(), bob.getY(), asteroid.get(i).getX(), asteroid.get(i).getY())<20)
      {
       asteroid.remove(i);
-     
      }
+ }
+  /*for(int j = 0; j < asteroid.size(); j++) 
+  {
+    for(int k = 0; k < bL.size(); k++)
+    {
+      if(dis(bL.get(k).getX(), bL.get(k).getY(), asteroid.get(j).getX(), asteroid.get(j).getY())<20)
+      {
+        asteroid.remove(j);
+        bL.remove(k);
+      }
+    }
   }
-
+*/
   bob.show();
   bob.move();
   //your code here
@@ -57,7 +74,10 @@ public void keyPressed()
     bob.setY((int)(Math.random()*600));
     bob.accelerate(0);
   }
-
+if(key == 'j')
+{
+  bL.add(new Bullet(bob));
+}
 
 
 }
@@ -125,12 +145,46 @@ class Asteroid extends Floater
 
   }
  
- void move()
+  public void move()
  {
    rotate(astSpeed);
    super.move();
  }
    public void setX(int x){myCenterX = x;}
+  public int getX(){return (int)myCenterX;}
+  public void setY(int y){myCenterY = y;}
+  public int getY(){return (int)myCenterY;}
+  public void setDirectionX(double x){myDirectionX = x;}
+  public double getDirectionX(){return myDirectionX;}
+  public void setDirectionY(double y){myDirectionY = y;}
+  public double getDirectionY(){return myDirectionY;}
+  public void setPointDirection(int degrees){myPointDirection = degrees;}
+  public double getPointDirection(){return myPointDirection;}
+}
+
+
+class Bullet extends Floater
+{
+  public Bullet(SpaceShip theShip)
+ {
+  myCenterX = theShip.getX();
+  myCenterY = theShip.getY();
+  myPointDirection = theShip.getPointDirection();
+  double dRadians = myPointDirection*(Math.PI/180);
+  myDirectionX = 5*Math.cos(dRadians) + theShip.getDirectionX();
+  myDirectionY = 5*Math.sin(dRadians) + theShip.getDirectionY();
+  myColor = color(220,0,30);
+ }
+
+  public void show()
+  {
+    fill(myColor);
+    stroke(myColor);
+    ellipse((int)myCenterX, (int)myCenterY, 5,5);
+  }
+
+
+  public void setX(int x){myCenterX = x;}
   public int getX(){return (int)myCenterX;}
   public void setY(int y){myCenterY = y;}
   public int getY(){return (int)myCenterY;}
@@ -157,7 +211,7 @@ xCorners[1] = 16;
 yCorners[1] = 0;
 xCorners[2] = -8;
 yCorners[2] = 8;
-myColor = color(100,200,0);
+myColor = color(120,210,150);
 myCenterX = 300;
 myCenterY = 300;
 myDirectionX = 0;
