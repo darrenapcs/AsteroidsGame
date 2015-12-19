@@ -42,18 +42,28 @@ public void draw()
       asteroid.remove(i);
      }
  }
-  /*for(int j = 0; j < asteroid.size(); j++) 
+  for(int j = 0; j < asteroid.size(); j++) 
   {
     for(int k = 0; k < bL.size(); k++)
     {
-      if(dis(bL.get(k).getX(), bL.get(k).getY(), asteroid.get(j).getX(), asteroid.get(j).getY())<20)
+      if(dist(bL.get(k).getX(), bL.get(k).getY(), asteroid.get(j).getX(), asteroid.get(j).getY())<20)
       {
         asteroid.remove(j);
         bL.remove(k);
+        break;
       }
     }
   }
-*/
+  for( int j = 0; j < bL.size(); j++) 
+  {
+    bL.get(j).show();
+    bL.get(j).move();
+    if(bL.get(j).getX() > width || bL.get(j).getX() < 0 || bL.get(j).getY() > height || bL.get(j).getY() < 0)
+    {
+      bL.remove(j);
+    }
+  }
+
   bob.show();
   bob.move();
   //your code here
